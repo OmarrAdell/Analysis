@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class assignment2 {
 
     public static void main(String[] args) {
-        // Scoring matrix
+        
         double[][] scoringMatrix = {
                 {1, -0.8, -0.2, -2.3, -0.6},
                 {-0.8, 1, -1.1, -0.7, -1.5},
@@ -12,7 +12,7 @@ public class assignment2 {
                 {-0.6, -1.5, -0.9, -1, Double.NEGATIVE_INFINITY}
         };
 
-        // Test sequences
+       
         String x = "ATGCC";
         String y = "TACGCA";
       //  String x = "TCCCAGTTATGTCAGGGGACACGAGCATGCAGAGAC";
@@ -20,7 +20,7 @@ public class assignment2 {
 
         Object[] result = sequenceAlignment(x, y, scoringMatrix);
 
-        // Optimal Alignment
+      
         System.out.println("Optimal Alignment:");
         System.out.println("Sequence 1: " + result[0]);
         System.out.println("Sequence 2: " + result[1]);
@@ -31,7 +31,7 @@ public class assignment2 {
         int n = x.length();
         int m = y.length();
 
-        // Initialize the DP table with zeros
+       
         double[][] dp = new double[n + 1][m + 1];
         for (int j = 1; j <= m; j++) {
             dp[0][j] = dp[0][j - 1] + scoringMatrix[4][charToIndex(y.charAt(j - 1))];
@@ -39,7 +39,7 @@ public class assignment2 {
         for (int i = 1; i <= n; i++) {
             dp[i][0] = dp[i - 1][0] + scoringMatrix[charToIndex(x.charAt(i - 1))][4];
         }
-        // Fill in the DP table
+    
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= m; j++) {
                 char xChar = x.charAt(i - 1);
@@ -53,7 +53,7 @@ public class assignment2 {
             }
         }
 
-        // Traceback to reconstruct the alignment
+      
         StringBuilder alignX = new StringBuilder();
         StringBuilder alignY = new StringBuilder();
         int i = n, j = m;
@@ -79,7 +79,7 @@ public class assignment2 {
         }
 
         double alignmentScore = dp[n][m];
-        double threshold = 1e-10; // Adjust the threshold as needed
+        double threshold = 1e-10; 
         if (Math.abs(alignmentScore) < threshold) {
         	alignmentScore = 0.0;
         }
