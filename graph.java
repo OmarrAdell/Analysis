@@ -57,6 +57,51 @@ public class graph {
         }
     }
 
+    public void printTreeLeftToRight() {
+        boolean[] visited = new boolean[adjacencyList.length];
+        System.out.println("\nTree (Left to Right):");
+        dfsLeftToRight(1, visited);
+    }
+
+    private void dfsLeftToRight(int currentNode, boolean[] visited) {
+        if (!visited[currentNode]) {
+            System.out.print(currentNode + " ");
+            visited[currentNode] = true;
+            List<Integer> neighbors = adjacencyList[currentNode];
+            Collections.sort(neighbors); // Sort neighbors from left to right
+            for (int neighbor : neighbors) {
+                dfsLeftToRight(neighbor, visited);
+            }
+        }
+    }
+
+    public void breadthFirstSearchLeftToRight() {
+        boolean[] visited = new boolean[adjacencyList.length];
+        System.out.println("\nBreadth-First Search (Left to Right):");
+        bfsLeftToRight(1, visited);
+    }
+
+    private void bfsLeftToRight(int startNode, boolean[] visited) {
+        int[] queue = new int[adjacencyList.length];
+        int front = 0, rear = 0;
+
+        queue[rear++] = startNode;
+        visited[startNode] = true;
+
+        while (front < rear) {
+            int currentNode = queue[front++];
+            System.out.print(currentNode + " ");
+            List<Integer> neighbors = adjacencyList[currentNode];
+            Collections.sort(neighbors); // Sort neighbors from left to right
+            for (int neighbor : neighbors) {
+                if (!visited[neighbor]) {
+                    queue[rear++] = neighbor;
+                    visited[neighbor] = true;
+                }
+            }
+        }
+    }
+
     public void printCycles() {
         System.out.println("\nCycles in the Graph:");
         boolean[] visited = new boolean[adjacencyList.length];
@@ -129,10 +174,13 @@ public class graph {
         graph graph = new graph(vertices, edges);
         graph.depthFirstSearch(1);
         graph.breadthFirstSearch(1);
+        graph.printTreeLeftToRight();
+        graph.breadthFirstSearchLeftToRight();
         graph.printCycles();
         graph.isBipartite();
     }
 }
+
 
 
 
@@ -144,9 +192,3 @@ public class graph {
 //The DFS traversal visits each vertex once, contributing to the O(V) term.
 //In the worst case, each edge is examined once during the DFS traversal, contributing to the O(E) term.
 //Therefore, the overall time complexity is O(V + E).
-
-
-
-
-
-
